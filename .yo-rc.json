@@ -1,0 +1,10 @@
+{
+  "generator-angm": {
+    "appName": "users-and-teams",
+    "angularCookies": true,
+    "angularAnimate": true,
+    "angularSanitize": true,
+    "angularBootstrap": true,
+    "angularMaterial": true
+  }
+}
