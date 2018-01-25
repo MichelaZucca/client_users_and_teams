@@ -69,6 +69,11 @@
 				vm.showUpdate = true;
 			}
 
+			vm.selectTeam = function(){
+				const team = vm.selectTeam;
+				
+			}
+
 		}
 
 })();

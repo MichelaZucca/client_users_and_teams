@@ -14,12 +14,12 @@
           </md-card-title-media>
         </md-card-title>
         <md-card-actions layout="row" layout-align="end" >
-           <md-button class="md-raised md-primary">Update account</md-button>
+           <md-button class="md-raised md-primary" ng-disabled="vm.showUpdate" ng-click="vm.update()">Update account</md-button>
         </md-card-actions>
     </md-card-content>
   </md-card>
 
-  <md-card>
+  <md-card ng-show="!vm.showUpdate">
     <md-card-content>
       <div layout="row" layout-align="center center">
         <div flex="40" style="padding-top:76px;">
