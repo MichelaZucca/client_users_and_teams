@@ -36,13 +36,16 @@
 
 			vm.listTeams = [
 				{
-					name:"shlgg"
+					name:"shlgg",
+					size: 2,
 				},
 				{
-					name:"ajgajgaég"
+					name:"ajgajgaég",
+					size: 3,
 				},
 				{
-					name:"shllaljggg"
+					name:"shllaljggg",
+					size: 5,
 				},
 			];
 

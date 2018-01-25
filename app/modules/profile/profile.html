@@ -1,7 +1,7 @@
 <div class="md-padding" flex layout-sm="column">
   <md-card>
     <md-card-content>
-      <md-card>
+      <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
         <md-card-title>
           <md-card-title-text>
             <span class="md-headline">Username : {{vm.profile.username}}</span>
@@ -13,12 +13,45 @@
             <div class="md-media-md card-media" src></div>
           </md-card-title-media>
         </md-card-title>
-        <md-card-actions layout="row" layout-align="center center" layout-padding>
-           <md-button class="md-raised md-primary" ng-click="vm.update()">Update account</md-button>
+        <md-card-actions layout="row" layout-align="end" >
+           <md-button class="md-raised md-primary">Update account</md-button>
         </md-card-actions>
     </md-card-content>
   </md-card>
+
+  <md-card>
+    <md-card-content>
+      <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+        <div layout="row">
+          <div flex="50">
+            <md-list class="md-dense" flex>
+              <md-subheader class="md-no-sticky">List teams</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams">         
+                  <div class="md-list-item-text" layout="column">
+                    <h3>Name : {{ item.name }}</h3>     
+                    <p>Size : {{ item.size }}</p>
+                  </div>
+                </md-list-item>
+              <md-divider ></md-divider>
+            </md-list>
+          </div>
+          <div flex="50">
+            <md-list class="md-dense" flex>
+              <md-subheader class="md-no-sticky">List users</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
+                  <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.username }}</h3>
+                    <p>{{ item.email }}</p>
+                  </div>
+                </md-list-item>
+              <md-divider ></md-divider>
+          </md-list>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
 </div>
+
 
 <!-- 
 
@@ -30,17 +63,6 @@
 
 
 
-  <div>
-            <md-list class="md-dense" flex>
-                <md-subheader class="md-no-sticky">List teams</md-subheader>
-                  <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams">         
-                    <div class="md-list-item-text" layout="column">
-                      <h3>{{ item.name }}</h3>        
-                    </div>
-                  </md-list-item>
-                <md-divider ></md-divider>
-              </md-list>
-        </div>
         <div><md-list class="md-dense" flex>
             <md-subheader class="md-no-sticky">List users</md-subheader>
               <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
