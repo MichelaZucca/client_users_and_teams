@@ -1,0 +1,35 @@
+<div class="md-padding" flex layout-sm="column">
+    <md-card>
+        <md-card-content>
+                <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+                        <md-card-title>
+                          <md-card-title-text>
+                            <span class="md-headline">Username : {{vm.profile.username}}</span>
+                            <span class="md-subhead">First name : {{vm.profile.firstName}} </span>
+                            <span class="md-subhead">Last name : {{vm.profile.lastName}} </span>
+                            <span class="md-subhead">Email : {{vm.profile.email}}</span>
+                          </md-card-title-text>
+                          <md-card-title-media>
+                            <div class="md-media-md card-media" src></div>
+                          </md-card-title-media>
+                        </md-card-title>
+                        <md-card-actions layout="row" layout-align="end center">
+                          <md-button class="md-raised md-primary">show user</md-button>
+                          <md-button class="md-raised md-primary">show other users</md-button>
+                          <md-button class="md-raised md-primary">show my teams</md-button>
+                          <md-button class="md-raised md-primary">show other teams</md-button>
+                        </md-card-actions>
+                      </md-card>
+        </md-card-content>
+    </md-card>
+</div>
+
+<!-- 
+
+{"id":2,
+"username":"micky",
+"firstName":"lolo",
+"lastName":"chchca",
+"email":"michela.zucca@lala.ch"}
+
+-->

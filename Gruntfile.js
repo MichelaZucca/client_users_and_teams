@@ -115,13 +115,18 @@ module.exports = function (grunt) {
 				files: {
 					'index.html': [
 						'bower.json',
+						'src/bower_components/angular/angular.js',
+						'src/bower_components/angular-aria/angular-aria.js',
+						'src/bower_components/angular-animate/angular-animate.js',
+						'src/bower_components/angular-material/angular-material.js',
+						'src/bower_components/angular-messages/angular-messages.js',
 						'app/app.js',
 						'app/app.config.js',
 						'app/**/*Module.js',
 						'app/**/*Route.js',
 						'app/**/*Ctrl.js',
 						'app/**/*Service.js',
-						'app/**/*Directive.js'
+						'app/**/*Directive.js',		
 					]
 				}
 			},
