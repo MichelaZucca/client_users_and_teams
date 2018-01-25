@@ -29,11 +29,11 @@
 				email: '',
 			};
 
-			function setUserName(name){
+			function setUsername(name){
 				console.log('username have been saved');
 				username = name;
 			};
-			function getUserName(){
+			function getUsername(){
 				return username;
 			};
 			function setToken(jwt){
@@ -88,8 +88,8 @@
 			return{
 				setToken: setToken,
 				getToken: getToken,
-				setUserName: setUserName,
-				getUserName: getUserName,
+				setUsername: setUsername,
+				getUsername: getUsername,
 				getUser:getUser,
 				getId:getId,
 				getLastName:getLastName,

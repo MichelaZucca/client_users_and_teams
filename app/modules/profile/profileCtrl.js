@@ -44,20 +44,28 @@
 				profil_password:'',
 			};
 
-			vm.listTeams = [
-				{
-					name:"Team un",
-					size: 2,
-				},
-				{
-					name:"Team deux",
-					size: 3,
-				},
-				{
-					name:"Team trois",
-					size: 2,
-				},
-			];
+			vm.teamSelected = {
+				name:"no selected",
+				size: 0,
+			};
+
+			vm.listTeams = { 
+				list :[
+					{
+						name:"Team un",
+						size: 2,
+					},
+					{
+						name:"Team deux",
+						size: 3,
+					},
+					{
+						name:"Team trois",
+						size: 2,
+					},
+				],
+				selected : {name:"-- selected --", size:0},
+			};
 
 			vm.listUsers = [
 				{
@@ -74,7 +82,7 @@
 				},
 			];
 
-			vm.teamSelected = '';
+			
 
 			vm.update = function(){
 				vm.profileUpdate.firstName = vm.profile.firstName;

@@ -53,7 +53,7 @@
 	
 					$http(req).then(function (response) {
 							profileService.setToken(response.data);
-							profileService.setUserName(credentials.username);
+							profileService.setUsername(credentials.username);
 							profileService.getUser(credentials.username);
 							return response;
 						}, function (response) {
