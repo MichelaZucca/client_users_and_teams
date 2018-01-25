@@ -45,7 +45,7 @@
 				},
 				{
 					name:"shllaljggg",
-					size: 5,
+					size: 2,
 				},
 			];
 
@@ -64,6 +64,7 @@
 				},
 			];
 
+			vm.teamSelected = '';
 			vm.update = function(){
 				vm.showUpdate = true;
 			}

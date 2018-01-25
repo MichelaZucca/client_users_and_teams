@@ -21,30 +21,37 @@
 
   <md-card>
     <md-card-content>
-      <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
-        <div layout="row">
-          <div flex="50">
-            <md-list class="md-dense" flex>
-              <md-subheader class="md-no-sticky">List teams</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams">         
-                  <div class="md-list-item-text" layout="column">
-                    <h3>Name : {{ item.name }}</h3>     
-                    <p>Size : {{ item.size }}</p>
-                  </div>
-                </md-list-item>
-              <md-divider ></md-divider>
-            </md-list>
-          </div>
-          <div flex="50">
-            <md-list class="md-dense" flex>
-              <md-subheader class="md-no-sticky">List users</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
-                  <div class="md-list-item-text" layout="column">
-                    <h3>{{ item.username }}</h3>
-                    <p>{{ item.email }}</p>
-                  </div>
-                </md-list-item>
-              <md-divider ></md-divider>
+      <div layout="row" layout-align="center center">
+        <div flex="40" style="padding-top:76px;">
+          <md-list class="md-dense">
+            <md-subheader class="md-no-sticky">List teams</md-subheader>
+              <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams">         
+                <div class="md-list-item-text" layout="column">
+                  <h3>Name : {{ item.name }}</h3>     
+                  <p>Size : {{ item.size }}</p>
+                </div>
+              </md-list-item>
+            <md-divider ></md-divider>
+          </md-list>
+        </div>
+        <div flex="40">
+          <md-input-containe>
+              <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.teamSelected" style="min-width: 200px; max-width: 200px">
+                  <md-option 
+                      ng-repeat="team in vm.listTeams" 
+                      value="{{team.name}}">{{team.name}}
+                  </md-option>
+              </md-select>
+          </md-input-container>    
+          <md-list class="md-dense">
+            <md-subheader class="md-no-sticky">List users</md-subheader>
+              <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ item.username }}</h3>
+                  <p>{{ item.email }}</p>
+                </div>
+              </md-list-item>
+            <md-divider ></md-divider>
           </md-list>
         </div>
       </div>

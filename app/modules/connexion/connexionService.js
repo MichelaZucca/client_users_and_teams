@@ -25,15 +25,7 @@
 				var req = {
 					method: 'POST',
 					url: 'http://192.168.99.100:8080/api/users',
-					params: {
-						'query': 'nursing'
-					},
-					headers: {
-						  'Content-Type': 'application/json' , 
-						   'Access-Control-Allow-Origin': '*',
-							'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-						  'Access-Control-Allow-Headers':'X-Requested-With'	
-					 },
+					headers: {'Content-Type': 'application/json'},
 					data: user
 				};
 			
