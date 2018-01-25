@@ -83,6 +83,7 @@
 				console.log('connexion clique');
 				if(vm.user.username != '' && vm.user.password!= ''){
 					var resp = connexionService.connexion(vm.user);
+					console.log("response received to connexion");
 					console.log(resp);
 				}
 				

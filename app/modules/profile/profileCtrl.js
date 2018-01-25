@@ -13,7 +13,7 @@
 		.module('users-and-teams')
 		.controller('ProfileCtrl', Profile);
 
-		Profile.$inject = [];
+		Profile.$inject = ['profileService'];
 		
 		/*
 		* recommend
@@ -21,18 +21,18 @@
 		* and bindable members up top.
 		*/
 
-		function Profile() {
+		function Profile(profileService) {
 			/*jshint validthis: true */
 			var vm = this;
 
 			vm.showUpdate = false;
 
 			vm.profile = {
-				"id":2,
-				username:"micky",
-				firstName:"lolo",
-				lastName:"chchca",
-				email:"michela.zucca@lala.ch",
+				id: profileService.getId(),
+				username: profileService.getUsername(),
+				firstName: profileService.getFirstName(),
+				lastName: profileService.getLastName(),
+				email:profileService.getEmail(),
 			};
 
 			vm.profileUpdate = {
@@ -105,6 +105,7 @@
 			}
 			vm.cancelUpdate = function(){
 				vm.showUpdate = false;
+				console.log(profileService.getToken());
 			}
 
 		}

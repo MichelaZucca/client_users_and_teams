@@ -15,9 +15,9 @@
 		// Inject your dependencies as .$inject = ['$http', 'someSevide'];
 		// function Name ($http, someSevide) {...}
 
-		connexionService.$inject = ['$http'];
+		connexionService.$inject = ['$http', 'profileService'];
 
-		function connexionService ($http) {
+		function connexionService ($http, profileService) {
 
 			function createAccount(user){
 				console.log('call create');
@@ -28,20 +28,13 @@
 					headers: {'Content-Type': 'application/json'},
 					data: user
 				};
-			
-				console.log('req : ');
-				console.log(req);
 
 				$http(req)
 					.then(function (response) {
-					// this callback will be called asynchronously
-					// when the response is available
-						console.log('response : ');
+						console.log('created : ');
 						console.log(response);
 						return response;
 					}, function (response) {
-						// called asynchronously if an error occurs
-						// or server returns response with an error status.
 						console.log('error : ');
 						console.log(response);
 					}
@@ -50,8 +43,6 @@
 
 
 				function connexion(credentials){
-					console.log('Connexion enter credentials :');
-					console.log(credentials);
 					var req = {
 						method: 'POST',
 						url: 'http://192.168.99.100:8080/api/auth',
@@ -59,15 +50,11 @@
     							'Accept': 'application/json, text/plain, */*'},
 						data: credentials
 					};
-				
-					console.log('req : ');
-					console.log(req);
 	
 					$http(req).then(function (response) {
-							// this callback will be called asynchronously
-							// when the response is available
-							console.log('response : ');
-							console.log(response);
+							profileService.setToken(response.data);
+							profileService.setUserName(credentials.username);
+							profileService.getUser(credentials.username);
 							return response;
 						}, function (response) {
 							// called asynchronously if an error occurs
