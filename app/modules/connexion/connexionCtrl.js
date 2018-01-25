@@ -103,8 +103,6 @@
 						console.log(resp);
 					}
 				console.log(vm.newUser);
-	
-	
 			}
 		}
 		 		
