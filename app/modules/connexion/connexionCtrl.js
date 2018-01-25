@@ -70,38 +70,39 @@
 			};
 
 			vm.changeShow = function(){
-				console.log(vm.account.select);
 				if(vm.account.select=== 'new account'){
 					vm.showNewAccount = true;
 				}else{
 					vm.showNewAccount = false;
 				}
-				console.log(vm.showNewAccount);
 			};
 
 			vm.connexion = function(){
-				console.log('connexion clique');
 				if(vm.user.username != '' && vm.user.password!= ''){
-					var resp = connexionService.connexion(vm.user);
-					console.log("response received to connexion");
-					console.log(resp);
+					var res = connexionService.connexion(vm.user);
+					if(res.status === 201){
+						console.log('connexion etablished '+ res.status);
+					}else{
+						console.log('connexion failed '+ res.status);
+					}
 				}
 				
 			}
 
 			vm.createAccount = function(){
-				console.log("create account");
-				console.log('confirm pass : ' +vm.confirm_password);
-	
 				if(vm.newUser.username != '' && 
 					vm.newUser.password != '' &&
 					vm.newUser.email != '' && 
 					vm.firstName != '' &&
 					vm.lastName != '' &&
 					vm.confirm_password === vm.newUser.password){
-					connexionService.createAccount(vm.newUser);	
-					}
-				console.log(vm.newUser);
+						var res = connexionService.createAccount(vm.newUser);	
+						if(res.status === 201){
+							console.log('connexion etablished ' + res.status);
+						}else{
+							console.log('connexion failed ' + res.status);
+						}
+				}
 			}
 		}
 		 		

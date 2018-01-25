@@ -19,9 +19,10 @@
 
 		function connexionService ($http, profileService) {
 
+			// Créer un utilisateur
+			// Appel de POST api/users
 			function createAccount(user){
-				console.log('call create');
-				console.log(user);
+				// Préparation de la requête
 				var req = {
 					method: 'POST',
 					url: 'http://192.168.99.100:8080/api/users',
@@ -29,46 +30,56 @@
 					data: user
 				};
 
+				var status = {};
 				$http(req)
 					.then(function (response) {
-						console.log('created : ');
-						console.log(response);
+							// Mise à jour de l'état retourné
+							status = {status: response.status, message: response.statusText};
 						return response;
-					}, function (response) {
-						console.log('error : ');
-						console.log(response);
+					}, function (error) {
+							// Mise à jour de l'état retourné
+							status = {status: error.status, message: error.statusText};
 					}
 				);
+				return status;
 			};
 
 
-				function connexion(credentials){
-					var req = {
-						method: 'POST',
-						url: 'http://192.168.99.100:8080/api/auth',
-						headers: {		 
-    							'Accept': 'application/json, text/plain, */*'},
-						data: credentials
-					};
-	
-					$http(req).then(function (response) {
-							profileService.setToken(response.data);
-							profileService.setUsername(credentials.username);
-							profileService.getUser(credentials.username);
-							return response;
-						}, function (response) {
-							// called asynchronously if an error occurs
-							// or server returns response with an error status.
-							console.log('error : ');
-							console.log(response);
-						}
-					);
+			// Connexion d'un utilisateur déjà enregistré
+			// Appel de POST sur api/auth
+			function connexion(credentials){
+				// Préparation de la requête
+				var req = {
+					method: 'POST',
+					url: 'http://192.168.99.100:8080/api/auth',
+					headers: {		 
+							'Accept': 'application/json, text/plain, */*'},
+					data: credentials
 				};
+				// objet de retour
+				var status = {};
 
-				return {
-					connexion: connexion,
-					createAccount: createAccount
-				};
+				$http(req).then(function (response) {
+						// Mise à jour des informations pour initialisation du profile
+						profileService.setToken(response.data);
+						profileService.setUsername(credentials.username);
+						profileService.getUser(credentials.username);
+						profileService.getTeamsOfUser(credentials.username);
+						// Mise à jour de l'état retourné
+						status = {status: response.status, message: response.statusText};
+					}, function (error) {
+						// Mise à jour de l'état retourné
+						status = {status: error.status, message: error.statusText};
+					}
+				);
+				return status;
+			};
+
+			// Fonctions exposées à l'utilisation
+			return {
+				connexion: connexion,
+				createAccount: createAccount
+			};
 		}
 
 })();

@@ -26,6 +26,11 @@
 			var vm = this;
 
 			vm.showUpdate = false;
+			vm.token = '';
+
+			vm.setToken = function(token){
+				vm.token = token;
+			};
 
 			vm.profile = {
 				id: profileService.getId(),
@@ -44,45 +49,33 @@
 				profil_password:'',
 			};
 
-			vm.teamSelected = {
-				name:"no selected",
-				size: 0,
-			};
-
 			vm.listTeams = { 
-				list :[
-					{
-						name:"Team un",
-						size: 2,
-					},
-					{
-						name:"Team deux",
-						size: 3,
-					},
-					{
-						name:"Team trois",
-						size: 2,
-					},
-				],
-				selected : {name:"-- selected --", size:0},
+				teams:	profileService.getMyTeams(),
+				select : null,
 			};
 
-			vm.listUsers = [
-				{
-					username:"user1",
-					email:"user1a@mail.ch"
-				},
-				{
-					username:"user2",
-					email:"user2@mail.ch"
-				},
-				{
-					username:"user3",
-					email:"user3@mail.ch"
-				},
-			];
+			vm.isCreated = false;
+		
+			vm.nameTeamSelect = 'Not selected';
 
-			
+			vm.createTeamName = '';
+
+			vm.showCreateTeam = function(){
+				vm.isCreated = true;
+			};
+
+			vm.createTeam = function(){
+				profileService.createTeam(vm.createTeamName);
+				vm.isCreated = false;
+			};
+
+			vm.cheklogin = function(){
+				var state = profileService.getToken();
+				if(state === ''){
+					return false;
+				}
+				return true;
+			};
 
 			vm.update = function(){
 				vm.profileUpdate.firstName = vm.profile.firstName;
@@ -91,30 +84,45 @@
 				vm.profileUpdate.username = vm.profile.username;
 
 				vm.showUpdate = true;
-			}
+			};
 
 			vm.selectTeam = function(){
-				const team = vm.selectTeam;
+				var idTeam = 0;
+
+				vm.listTeams.teams.forEach( (element) => {
+					if(element.name === vm.nameTeamSelect){
+						vm.listTeams.select = element;
+					}
+				});
 				
-			}
+			};
 
 			vm.putUpdate = function(){
-				console.log(vm.profileUpdate);
 				if(vm.profileUpdate.username != '' && 
 				vm.profileUpdate.password != '' &&
 				vm.profileUpdate.email != '' && 
 				vm.profileUpdate != '' &&
 				vm.profileUpdate != '' &&
 				vm.profileUpdate.confirm_password === vm.profileUpdate.password){
-					console.log('update form');
 					
+					var status = profileService.updateUser(vm.profile.username, {
+						email: vm.profileUpdate.email,
+						firstName: vm.profileUpdate.firstName,
+						lastName: vm.profileUpdate.lastName,
+						password: vm.profileUpdate.password,
+					});
+
+					if(status === 201){
+						vm.profile = vm.profileUpdate;
+					}
 				}
 
-			}
+			};
+
 			vm.cancelUpdate = function(){
 				vm.showUpdate = false;
-				console.log(profileService.getToken());
-			}
+				profileService.setToken('');
+			};
 
 		}
 

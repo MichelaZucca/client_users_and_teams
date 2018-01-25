@@ -1,4 +1,13 @@
-<div class="md-padding" flex layout-sm="column">
+<div class="md-padding" flex layout-sm="column" ng-show=!vm.cheklogin()>
+  <md-card>
+    <md-card-content>
+      <p>You must be logged in to access this section.</p>
+      <p><a href="http://127.0.0.1:4000/#!/connexion">Click here !</a> </p>
+    </md-card-content>
+  </md-card>
+</div>
+
+<div class="md-padding" flex layout-sm="column" ng-show=vm.cheklogin()>
   <md-card>
     <md-card-content>
       <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
@@ -14,6 +23,7 @@
           </md-card-title-media>
         </md-card-title>
         <md-card-actions layout="row" layout-align="end" >
+          <md-button class="md-raised md-primary" ng-disabled="vm.isCreated" ng-click="vm.showCreateTeam()">Create team</md-button>
            <md-button class="md-raised md-primary" ng-disabled="vm.showUpdate" ng-click="vm.update()">Update account</md-button>
         </md-card-actions>
     </md-card-content>
@@ -26,10 +36,10 @@
         <md-card-content>
           <md-list class="md-dense">
             <md-subheader class="md-no-sticky">List teams</md-subheader>
-              <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams.list">         
+              <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams.teams">         
                 <div class="md-list-item-text" layout="column">
                   <h3>Name : {{ item.name }}</h3>     
-                  <p>Size : {{ item.size }}</p>
+                  <p>Id : {{ item.id }}</p>
                 </div>
               </md-list-item>
             <md-divider ></md-divider>
@@ -39,11 +49,32 @@
     </div>
 
     <div flex="60">
+       <md-card layout="row">
+        <md-card-content ng-show="vm.isCreated">
+            <md-input-container class="md-block">
+              <form name="formTeam" ng-show="!vm.showNewAccount">
+                <md-content layout="column" layout-padding="">
+                  <label>Team name</label>
+                  <input minLength="4" required  name="teamName" ng-model="vm.createTeamName">
+                  <div ng-messages="formTeam.un.$error">
+                      <div ng-message="required">This is required.</div>
+                      <div ng-message="minlength">The description must be more than 4 characters long.</div>
+                  </div>
+                </md-content>
+                <md-card-actions layout="row" layout-align="end" >
+                    <md-button type="submit" class="md-raised md-primary"  ng-click="vm.showCreateTeam()">Create</md-button>
+                </md-card-actions>
+              </form>
+            </md-input-container>
+        </md-card-content>
+    </md-card>
+
+
       <md-card layout="row">
         <md-card-content flex=70 > 
             <md-list class="md-dense">
               <md-subheader class="md-no-sticky">List users</md-subheader>
-              <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
+              <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams.select.members">         
                   <div class="md-list-item-text" layout="column">
                     <h3>{{ item.username }}</h3>
                     <p>{{ item.email }}</p>
@@ -54,10 +85,9 @@
         
         </md-card-content>
         <md-card-content flex=30>
-            <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.listTeams.selected">
+            <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.nameTeamSelect">
               <md-option 
-                  ng-repeat="team in vm.listTeams.list" 
-                  value="{{team.name}}">{{team.name}}
+                  ng-repeat="item in vm.listTeams.teams" value="{{item.name}}">{{item.name}}
               </md-option>
             </md-select> 
         </md-card-content>
@@ -74,7 +104,7 @@
               <div flex="30"style="margin-right:10px; margin-left:10px;">
                 <md-input-container class="md-block">
                     <label>First name</label>
-                    <input minLength="4" required  name="firstName" ng-model="vm.profile.firstName">
+                    <input minLength="4" required  name="firstName" ng-model="vm.profileUpdate.firstName">
                     <div ng-messages="updateForm.firstName.$error">
                         <div ng-message="required">This is required.</div>
                         <div ng-message="minlength">The description must be more than 4 characters long.</div>
@@ -84,7 +114,7 @@
               <div flex="30"style="margin-right:10px; margin-left:10px;">
                 <md-input-container class="md-block">
                     <label>Last name</label>
-                    <input minLength="4" required  name="lastname" ng-model="vm.profile.lastName">
+                    <input minLength="4" required  name="lastname" ng-model="vm.profileUpdate.lastName">
                     <div ng-messages="updateForm.lastname.$error">
                         <div ng-message="required">This is required.</div>
                         <div ng-message="minlength">The description must be more than 4 characters long.</div>
