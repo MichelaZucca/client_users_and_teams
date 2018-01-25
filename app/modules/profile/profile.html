@@ -19,9 +19,11 @@
     </md-card-content>
   </md-card>
 
+  <!-- Informations du users et de ces teams-->
   <md-card ng-show="!vm.showUpdate">
     <md-card-content>
       <div layout="row" layout-align="center center">
+        
         <div flex="40" style="padding-top:76px;">
           <md-list class="md-dense">
             <md-subheader class="md-no-sticky">List teams</md-subheader>
@@ -34,26 +36,99 @@
             <md-divider ></md-divider>
           </md-list>
         </div>
+
         <div flex="40">
           <md-input-containe>
-              <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.teamSelected" style="min-width: 200px; max-width: 200px">
+              <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.teamSelected" style="min-width:200px; max-width:200px;">
                   <md-option 
                       ng-repeat="team in vm.listTeams" 
                       value="{{team.name}}">{{team.name}}
                   </md-option>
               </md-select>
-          </md-input-container>    
-          <md-list class="md-dense">
-            <md-subheader class="md-no-sticky">List users</md-subheader>
-              <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
-                <div class="md-list-item-text" layout="column">
-                  <h3>{{ item.username }}</h3>
-                  <p>{{ item.email }}</p>
+              <md-button type="submit" ng-click="vm.addUserTeam()" class="md-raised md-primary">Add user</md-button>
+          </md-input-container>   
+
+        <md-list class="md-dense">
+          <md-subheader class="md-no-sticky">List users</md-subheader>
+            <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
+              <div class="md-list-item-text" layout="column">
+                <h3>{{ item.username }}</h3>
+                <p>{{ item.email }}</p>
+              </div>
+            </md-list-item>
+          <md-divider ></md-divider>
+        </md-list>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <!-- Formulaire d'update -->
+  <md-card ng-show="vm.showUpdate">
+    <md-card-content>
+        <form name="updateForm" >
+            <md-content layout="column" layout-padding="">
+              <div layout="row" >
+              <div flex="30"style="margin-right:10px; margin-left:10px;">
+                <md-input-container class="md-block">
+                    <label>First name</label>
+                    <input minLength="4" required  name="firstName" ng-model="vm.profile.firstName">
+                    <div ng-messages="updateForm.firstName.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="minlength">The description must be more than 4 characters long.</div>
+                    </div>
+                </md-input-container>
+              </div>
+              <div flex="30"style="margin-right:10px; margin-left:10px;">
+                <md-input-container class="md-block">
+                    <label>Last name</label>
+                    <input minLength="4" required  name="lastname" ng-model="vm.profile.lastName">
+                    <div ng-messages="updateForm.lastname.$error">
+                        <div ng-message="required">This is required.</div>
+                        <div ng-message="minlength">The description must be more than 4 characters long.</div>
+                    </div>
+                </md-input-container>
+              </div>
+              <div flex="30"style="margin-right:10px; margin-left:10px;">
+                  <md-input-container class="md-block">
+                      <label>Email</label>
+                      <input minLength="4" required  name="email" ng-model="vm.profileUpdate.email" ng-pattern="/^.+@.+\..+$/">
+                      <div ng-messages="updateForm.email.$error">
+                          <div ng-message="required">This is required.</div>
+                          <div ng-message="minLength">The description must be more than 4 characters long.</div>
+                          <div ng-message="pattern">This email must look like an e-mail address</div>
+                      </div>
+                  </md-input-container>
                 </div>
-              </md-list-item>
-            <md-divider ></md-divider>
-          </md-list>
-        </div>
+              </div>
+              <div layout="row">
+                  <div flex="50"style="margin-right:10px; margin-left:10px;">
+                  <md-input-container class="md-block">
+                      <label>Password</label>
+                      <input minlength="4" type="password" required name="pwdnew" ng-model="vm.profileUpdate.password">
+                      <div ng-messages="updateForm.pwdnew.$error">
+                          <div ng-message="required">This is required.</div>
+                          <div ng-message="minLength">The description must be more than 4 characters long.</div>
+                      </div>
+                  </md-input-container>
+                  </div>
+                  <div flex="50"style="margin-right:10px; margin-left:10px;">
+                    <md-input-container class="md-block">
+                            <label>Confirm Password</label>
+                            <input type="password" minLength="4" required  name="confirm_password" ng-model="vm.profileUpdate.confirm_password" compare-to="vm.profileUpdate.password">
+                            <div ng-messages="updateForm.confirm_password.$error">
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="minLength">The description must be more than 4 characters long.</div>
+                            </div>
+                    </md-input-container>
+                  </div>
+                </div>
+                <div layout="column" layout-align="center center">
+                    <div>
+                        <md-button type="submit" ng-click="vm.putUpdate()" class="md-raised md-primary">Update</md-button>
+                    </div>                          
+                </div>
+            </md-content>
+        </form>
       </div>
     </md-card-content>
   </md-card>
