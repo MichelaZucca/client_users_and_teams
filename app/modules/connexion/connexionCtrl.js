@@ -65,8 +65,8 @@
 			vm.confirm_password = '';
 
 			vm.user = {
-				username :'',
 				password: '',
+				username :'',
 			};
 
 			vm.changeShow = function(){
@@ -82,10 +82,10 @@
 			vm.connexion = function(){
 				console.log('connexion clique');
 				if(vm.user.username != '' && vm.user.password!= ''){
-					console.log('connexion ok');
-					const resp = connexionService.connexion(vm.user);
+					var resp = connexionService.connexion(vm.user);
+					console.log(resp);
 				}
-				console.log(vm.user);
+				
 			}
 
 			vm.createAccount = function(){
@@ -98,9 +98,7 @@
 					vm.firstName != '' &&
 					vm.lastName != '' &&
 					vm.confirm_password === vm.newUser.password){
-						console.log('chek ok');
-						const resp = connexionService.createAccount(vm.newUser);
-						console.log(resp);
+					connexionService.createAccount(vm.newUser);	
 					}
 				console.log(vm.newUser);
 			}

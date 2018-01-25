@@ -46,31 +46,31 @@
 
 			vm.listTeams = [
 				{
-					name:"shlgg",
+					name:"Team un",
 					size: 2,
 				},
 				{
-					name:"ajgajgaég",
+					name:"Team deux",
 					size: 3,
 				},
 				{
-					name:"shllaljggg",
+					name:"Team trois",
 					size: 2,
 				},
 			];
 
 			vm.listUsers = [
 				{
-					username:"micky",
-					email:"michela.zucca@lala.ch"
+					username:"user1",
+					email:"user1a@mail.ch"
 				},
 				{
-					username:"lalalala",
-					email:"lajlaglgag.zucca@lala.ch"
+					username:"user2",
+					email:"user2@mail.ch"
 				},
 				{
-					username:"mialgakhgcky",
-					email:"agajgpajggpaj.zucca@lala.ch"
+					username:"user3",
+					email:"user3@mail.ch"
 				},
 			];
 
@@ -99,9 +99,12 @@
 				vm.profileUpdate != '' &&
 				vm.profileUpdate.confirm_password === vm.profileUpdate.password){
 					console.log('update form');
-					vm.showUpdate = false;
+					
 				}
 
+			}
+			vm.cancelUpdate = function(){
+				vm.showUpdate = false;
 			}
 
 		}

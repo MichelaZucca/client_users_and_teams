@@ -20,11 +20,10 @@
   </md-card>
 
   <!-- Informations du users et de ces teams-->
-  <md-card ng-show="!vm.showUpdate">
-    <md-card-content>
-      <div layout="row" layout-align="center center">
-        
-        <div flex="40" style="padding-top:76px;">
+  <div layout="row" ng-show="!vm.showUpdate">
+    <div flex=40>
+      <md-card>
+        <md-card-content>
           <md-list class="md-dense">
             <md-subheader class="md-no-sticky">List teams</md-subheader>
               <md-list-item class="md-3-line" ng-repeat="item in vm.listTeams">         
@@ -35,32 +34,36 @@
               </md-list-item>
             <md-divider ></md-divider>
           </md-list>
-        </div>
+        </md-card-content>
+      </md-card>
+    </div>
 
-        <div flex="40">
-          <md-input-containe>
-              <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.teamSelected" style="min-width:200px; max-width:200px;">
-                  <md-option 
-                      ng-repeat="team in vm.listTeams" 
-                      value="{{team.name}}">{{team.name}}
-                  </md-option>
-              </md-select>
-              <md-button type="submit" ng-click="vm.addUserTeam()" class="md-raised md-primary">Add user</md-button>
-          </md-input-container>   
-
-        <md-list class="md-dense">
-          <md-subheader class="md-no-sticky">List users</md-subheader>
-            <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
-              <div class="md-list-item-text" layout="column">
-                <h3>{{ item.username }}</h3>
-                <p>{{ item.email }}</p>
-              </div>
-            </md-list-item>
-          <md-divider ></md-divider>
-        </md-list>
-      </div>
-    </md-card-content>
-  </md-card>
+    <div flex="60">
+      <md-card layout="row">
+        <md-card-content flex=70 > 
+            <md-list class="md-dense">
+              <md-subheader class="md-no-sticky">List users</md-subheader>
+              <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
+                  <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.username }}</h3>
+                    <p>{{ item.email }}</p>
+                  </div>
+                  </md-list-item>
+              <md-divider ></md-divider>
+              </md-list>
+        
+        </md-card-content>
+        <md-card-content flex=30>
+            <md-select class="md-block" ng-change="vm.selectTeam()" ng-model="vm.teamSelected" style="min-width:200px; max-width:200px;">
+              <md-option 
+                  ng-repeat="team in vm.listTeams" 
+                  value="{{team.name}}">{{team.name}}
+              </md-option>
+            </md-select> 
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
 
   <!-- Formulaire d'update -->
   <md-card ng-show="vm.showUpdate">
@@ -124,6 +127,7 @@
                 </div>
                 <div layout="column" layout-align="center center">
                     <div>
+                        <md-button ng-click="vm.cancelUpdate()" class="md-raised md-primary">Cancel</md-button>
                         <md-button type="submit" ng-click="vm.putUpdate()" class="md-raised md-primary">Update</md-button>
                     </div>                          
                 </div>
@@ -133,27 +137,3 @@
     </md-card-content>
   </md-card>
 </div>
-
-
-<!-- 
-
-{"id":2,
-"username":"micky",
-"firstName":"lolo",
-"lastName":"chchca",
-"email":"michela.zucca@lala.ch"}
-
-
-
-        <div><md-list class="md-dense" flex>
-            <md-subheader class="md-no-sticky">List users</md-subheader>
-              <md-list-item class="md-3-line" ng-repeat="item in vm.listUsers">         
-                <div class="md-list-item-text" layout="column">
-                  <h3>{{ item.username }}</h3>
-                  <h4>{{ item.email }}</h4> 
-                </div>
-              </md-list-item>
-            <md-divider ></md-divider>
-          </md-list>
-        </div>
--->

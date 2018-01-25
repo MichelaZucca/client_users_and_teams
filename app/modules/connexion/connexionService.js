@@ -32,52 +32,54 @@
 				console.log('req : ');
 				console.log(req);
 
-				$http(req).then(function successCallback(response) {
+				$http(req)
+					.then(function (response) {
 					// this callback will be called asynchronously
 					// when the response is available
-					console.log('response : ');
-					console.log(response);
-					return response;
-					}, function errorCallback(error) {
-					// called asynchronously if an error occurs
-					// or server returns response with an error status.
-					console.log('error : ');
-					console.log(error);
+						console.log('response : ');
+						console.log(response);
+						return response;
+					}, function (response) {
+						// called asynchronously if an error occurs
+						// or server returns response with an error status.
+						console.log('error : ');
+						console.log(response);
 					}
 				);
-			}
+			};
 
 
-				function connexion(user){
-					console.log('call create');
-					console.log(user);
+				function connexion(credentials){
+					console.log('Connexion enter credentials :');
+					console.log(credentials);
 					var req = {
 						method: 'POST',
-						url: 'http://localhost:8080/api/auth',
-						headers: {'Content-Type': 'application/json'},
-						data: user
+						url: 'http://192.168.99.100:8080/api/auth',
+						headers: {		 
+    							'Accept': 'application/json, text/plain, */*'},
+						data: credentials
 					};
 				
 					console.log('req : ');
 					console.log(req);
 	
-					$http(req).then(function successCallback(response) {
-						// this callback will be called asynchronously
-						// when the response is available
-						console.log('response : ');
-						console.log(response);
-						return response;
-						}, function errorCallback(error) {
-						// called asynchronously if an error occurs
-						// or server returns response with an error status.
-						console.log('error : ');
-						console.log(error);
+					$http(req).then(function (response) {
+							// this callback will be called asynchronously
+							// when the response is available
+							console.log('response : ');
+							console.log(response);
+							return response;
+						}, function (response) {
+							// called asynchronously if an error occurs
+							// or server returns response with an error status.
+							console.log('error : ');
+							console.log(response);
 						}
 					);
-				}
+				};
 
 				return {
-					connexion:connexion,
+					connexion: connexion,
 					createAccount: createAccount
 				};
 		}
