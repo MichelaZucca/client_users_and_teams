@@ -193,8 +193,7 @@
 						],
 						name: name
 					  };
-					  console.log(data);
-				
+					  console.log(datas);
 
 				// Préparation de la requête
 				var req = {
