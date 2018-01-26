@@ -193,18 +193,19 @@
 						],
 						name: name
 					  };
-					  console.log(datas);
+					
 
 				// Préparation de la requête
 				var req = {
 					method: 'POST',
-					url: 'http://localhost:8080/teams',
+					url: 'http://localhost:8080//api/teams',
 					headers: {
 						'Authorization': 'Bearer ' + token,
 						'Accept': 'application/json',
 					},
 					data: datas
 				};
+				console.log(req);
 	
 				// Objet de retour
 				var state = {};
