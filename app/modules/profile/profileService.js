@@ -65,7 +65,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'GET',
-					url: 'http://192.168.99.100:8080/api/users/'+ username,
+					url: 'http://localhost:8080/api/users/'+ username,
 					headers: {
 						'Authorization': 'Bearer ' + token,
 						'Accept': 'application/json',
@@ -94,7 +94,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'PUT',
-					url: 'http://192.168.99.100:8080/api/users/' + username,
+					url: 'http://localhost:8080/api/users/' + username,
 					headers: {
 						'Authorization': 'Bearer ' + token,
 						'Accept': 'application/json',
@@ -127,7 +127,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'GET',
-					url: 'http://192.168.99.100:8080/api/users/' + username+'/teams',
+					url: 'http://localhost:8080/api/users/' + username+'/teams',
 					headers: {
 						'Authorization': 'Bearer ' + token,
 						'Accept': 'application/json',
@@ -154,7 +154,7 @@
 					// Préparation de la requête
 					var req = {
 						method: 'GET',
-						url: 'http://192.168.99.100:8080/api/teams/' + idTeam,
+						url: 'http://localhost:8080/api/teams/' + idTeam,
 						headers: {
 							'Authorization': 'Bearer ' + token,
 							'Accept': 'application/json',
@@ -198,7 +198,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'POST',
-					url: 'http://192.168.99.100:8080/teams',
+					url: 'http://localhost:8080/teams',
 					headers: {
 						'Authorization': 'Bearer ' + token,
 						'Accept': 'application/json',

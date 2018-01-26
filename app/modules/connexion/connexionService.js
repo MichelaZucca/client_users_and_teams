@@ -25,7 +25,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'POST',
-					url: 'http://192.168.99.100:8080/api/users',
+					url: 'http://localhost:8080/api/users',
 					headers: {'Content-Type': 'application/json'},
 					data: user
 				};
@@ -51,7 +51,7 @@
 				// Préparation de la requête
 				var req = {
 					method: 'POST',
-					url: 'http://192.168.99.100:8080/api/auth',
+					url: 'http://localhost:8080/api/auth',
 					headers: {		 
 							'Accept': 'application/json, text/plain, */*'},
 					data: credentials
