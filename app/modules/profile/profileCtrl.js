@@ -64,6 +64,10 @@
 				vm.isCreated = true;
 			};
 
+			vm.hideCreateTeam = function(){
+				vm.isCreated = false;
+			}
+
 			vm.createTeam = function(){
 				profileService.createTeam(vm.createTeamName);
 				vm.isCreated = false;

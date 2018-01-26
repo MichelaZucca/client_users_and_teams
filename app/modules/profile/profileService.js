@@ -193,6 +193,7 @@
 						],
 						name: name
 					  };
+					  console.log(data);
 				
 
 				// Préparation de la requête
