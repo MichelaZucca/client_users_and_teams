@@ -125,7 +125,6 @@
 
 			vm.cancelUpdate = function(){
 				vm.showUpdate = false;
-				profileService.setToken('');
 			};
 
 		}
