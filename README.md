@@ -1,23 +1,27 @@
 # Welcome to the "users and teams" microservice
 
-This application is an example to use the microservice serveur. You need run it !
-
+This application is an example to use the microservice "users and teams".
 
 ## How install it
 
 You need to clone this repo
-```git clone .... ````
+```
+git clone <path>
+```
 
-Execute this commands of root project
+Run commands at the root of the project to install the dependencies
 ``` 
 npm install
 bower install
+```
+And run this command for run the project
+```
 grunt dev
 ```
 
 ## How use it
 The purpose of this application is to show you the possibilities offered by our microservice.
-###Our service offers you
+### Our service offers you
 1. Create an user
 2. Sign in with an existing account
 3. Update an existing account (except the username)
@@ -30,7 +34,7 @@ The purpose of this application is to show you the possibilities offered by our 
 
 This example show you how to use our microservice for step 1 to 7. For steps 8 and 9 please refere to the API.
 
-###Menu of navigation:
+### Menu of navigation:
 
 Sign-in / Sign up: you can create an user or sign in.
 Profile: you can see the user infos, update that, create a team for the actually user logged, look that teams, and look the members of that teams.
