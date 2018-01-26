@@ -49,10 +49,10 @@
     </div>
 
     <div flex="60">
-       <md-card layout="row">
+       <md-card layout="row" ng-show="!vm.showNewAccount">
         <md-card-content ng-show="vm.isCreated">
             <md-input-container class="md-block">
-              <form name="formTeam" ng-show="!vm.showNewAccount">
+              <form name="formTeam">
                 <md-content layout="column">
                   <label>Team name</label>
                   <input minLength="4" required  name="teamName" ng-model="vm.createTeamName">

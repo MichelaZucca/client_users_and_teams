@@ -24,8 +24,6 @@
 	function Home(homeService) {
 		/*jshint validthis: true */
 		var vm = this;
-		
-		vm.listFeatures = homeService.getFeaturesList();
 
 	}
 

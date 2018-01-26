@@ -7,36 +7,98 @@
 	* @description
 	* # homeService
 	* Service of the app
+	* Contains the information of the connected user.
 	*/
 
 	angular.module('users-and-teams')
 		.factory('homeService', homeService);
 
-	homeService.$inject = ['$http'];
+	homeService.$inject = [];
 
-	function homeService($http) {
+	function homeService() {
 
-		var list = [
-			{"feature": "Implemented Best Practices, following: John Papa's Guide"},
-			{"feature": "Using Controller AS syntax"},
-			{"feature": "Wrap Angular components in an Immediately Invoked Function Expression (IIFE)"},
-			{"feature": "Declare modules without a variable using the setter syntax"},
-			{"feature": "Using named functions"},
-			{"feature": "Including Unit test with Karma"},
-			{"feature": "Including UI options for Bootstrap or Angular-Material"},
-			{"feature": "Including Angular-Material-Icons for Angular-Material UI"},
-			{"feature": "Dynamic Menu generator for both themes"},
-			{"feature": "Grunt task for Production and Development"}
-		];
+		// token of the connected user
+		var token = '';
 
-		return {
-			getFeaturesList: getFeaturesList
+		// informations of the connected user
+		var userInfos = {
+			username: '',
+			firstName:'',
+			lastName:'',
+			id:'',
+			email:'',
 		};
 
-		function getFeaturesList() {
-			return list;
+		// Status of all request on API 
+		// can be get
+		var status = {
+			code : '',
+			message : '',
+			data: {},
+		};
+
+		// List of teams of the connected user
+		var listMyTeams = [];
+	
+		/** Getters / Setters */
+		function setListMyTeams(newList){
+			listMyTeams = [];
+			for(var i= 0; i < newList.length; i++){
+				listMyTeams.push(newList[i]);
+			}
+		}
+		function getListMyTeams(){
+			return listMyTeams;
+		}
+		function setToken(newToken){
+			token = newToken;
+		}
+		function getToken(){
+			return token;
+		}
+		function getUserName(){
+			return userInfos.username;
+		}
+		function setUserName(newUsername){
+			userInfos.username = newUsername;
+		}
+		function setStatus(newStatus){
+			status.code = newStatus.code;
+			status.message = newStatus.message;
+			status.data = newStatus.data;
+		}
+		function setUserInfos(infos){
+			userInfos.username = infos.username;
+			userInfos.firstName = infos.firstName;
+			userInfos.lastName = infos.lastName;
+			userInfos.id = infos.id;
+			userInfos.email = infos.email;
+		}
+		function getUserInfos(){
+			return userInfos;
+		}
+		
+		// Display to the console the status of request API
+		function checkStatus(code){
+			if(status.code == code){
+				console.log('successfuly');
+			}else{
+				console.log('failed');
+			}
 		}
 
+		return {
+			setStatus: setStatus,
+			checkStatus: checkStatus,
+			setUserInfos: setUserInfos,	
+			getUserInfos: getUserInfos,	
+			setToken: setToken,	
+			getToken: getToken,
+			getUserName: getUserName,
+			setUserName: setUserName,
+			getListMyTeams: getListMyTeams,
+			setListMyTeams: setListMyTeams,
+		};
 	}
 
 })();

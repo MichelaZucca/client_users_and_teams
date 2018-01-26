@@ -13,7 +13,7 @@
 		.module('users-and-teams')
 		.controller('ProfileCtrl', Profile);
 
-		Profile.$inject = ['profileService'];
+		Profile.$inject = ['profileService', 'homeService', '$timeout'];
 		
 		/*
 		* recommend
@@ -21,24 +21,20 @@
 		* and bindable members up top.
 		*/
 
-		function Profile(profileService) {
+		function Profile(profileService,homeService, $timeout) {
 			/*jshint validthis: true */
 			var vm = this;
 
+			// show/hide views
 			vm.showUpdate = false;
-			vm.token = '';
+			vm.isCreated = false;
 
-			vm.setToken = function(token){
-				vm.token = token;
-			};
-
-			vm.profile = {
-				id: profileService.getId(),
-				username: profileService.getUsername(),
-				firstName: profileService.getFirstName(),
-				lastName: profileService.getLastName(),
-				email:profileService.getEmail(),
-			};
+			vm.token = homeService.getToken();
+			vm.profile = homeService.getUserInfos();
+			vm.listTeams = { 
+				teams: homeService.getListMyTeams(),
+				select : null,
+			};	
 
 			vm.profileUpdate = {
 				username:'',
@@ -49,58 +45,69 @@
 				profil_password:'',
 			};
 
-			vm.listTeams = { 
-				teams:	profileService.getMyTeams(),
-				select : null,
-			};
-
-			vm.isCreated = false;
-		
 			vm.nameTeamSelect = 'Not selected';
-
 			vm.createTeamName = '';
 
+			// update listViews of teams 
+			vm.updateListTeams = function(){
+				var list = homeService.getListMyTeams();
+				vm.listTeams.teams = list;
+			};
+
+			// display creation of team
 			vm.showCreateTeam = function(){
 				vm.isCreated = true;
 			};
-
+			// hide creation of team
 			vm.hideCreateTeam = function(){
 				vm.isCreated = false;
 			}
 
+			// create a team
 			vm.createTeam = function(){
 				profileService.createTeam(vm.createTeamName);
 				vm.isCreated = false;
+				// wait for the server to be updated 
+				$timeout( function(){
+					profileService.getTeamsOfUser(homeService.getUserName());	
+				}, 1000);
+				$timeout( function(){
+					vm.updateListTeams();
+				}, 2000);
+				
 			};
 
+			// Check if the user is logging
+			// display or hide the profil views
 			vm.cheklogin = function(){
-				var state = profileService.getToken();
-				if(state === ''){
+				var token = homeService.getToken();
+				if(token === ''){
 					return false;
 				}
 				return true;
 			};
 
+			// initialized infos of views update
 			vm.update = function(){
-				vm.profileUpdate.firstName = vm.profile.firstName;
-				vm.profileUpdate.lastName = vm.profile.lastName;
-				vm.profileUpdate.email = vm.profile.email;
-				vm.profileUpdate.username = vm.profile.username;
+				var infos = homeService.getUserInfos();
+				vm.profileUpdate.firstName = infos.firstName;
+				vm.profileUpdate.lastName = infos.lastName;
+				vm.profileUpdate.email = infos.email;
+				vm.profileUpdate.username = infos.username;
 
 				vm.showUpdate = true;
 			};
 
+			// select the team corresponding to the select input
 			vm.selectTeam = function(){
-				var idTeam = 0;
-
 				vm.listTeams.teams.forEach( (element) => {
 					if(element.name === vm.nameTeamSelect){
 						vm.listTeams.select = element;
 					}
 				});
-				
 			};
 
+			// update account of user
 			vm.putUpdate = function(){
 				if(vm.profileUpdate.username != '' && 
 				vm.profileUpdate.password != '' &&
@@ -109,24 +116,20 @@
 				vm.profileUpdate != '' &&
 				vm.profileUpdate.confirm_password === vm.profileUpdate.password){
 					
-					var status = profileService.updateUser(vm.profile.username, {
+					profileService.updateUser(
+						homeService.getUserName(), {
 						email: vm.profileUpdate.email,
 						firstName: vm.profileUpdate.firstName,
 						lastName: vm.profileUpdate.lastName,
 						password: vm.profileUpdate.password,
-					});
-
-					if(status === 201){
-						vm.profile = vm.profileUpdate;
-					}
+						});
 				}
-
 			};
 
+			// hide the update view
 			vm.cancelUpdate = function(){
 				vm.showUpdate = false;
 			};
-
-		}
+	}
 
 })();

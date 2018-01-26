@@ -14,7 +14,7 @@
 		.controller('ConnexionCtrl', Connexion)
 		.directive("compareTo", compareTo);
 
-		Connexion.$inject = ['connexionService'];
+		Connexion.$inject = ['connexionService','homeService'];
 
 		/*
 		* recommend
@@ -40,12 +40,17 @@
 			};
 		  }
 
-		function Connexion(connexionService) {
-			/*jshint validthis: true */
+		function Connexion(connexionService, homeService) {
 			var vm = this;
 
+			/**
+			 *  switch the view
+			 *  for create an account => true
+			 *  for sign-in => false
+			 */
 			vm.showNewAccount = false;
 
+			// Select input for switch the view
 			vm.account = {
 				type : [
 					{id: '0', value: 'new account'},
@@ -54,6 +59,7 @@
 				select : {id: '1', value: 'login'}
 			}
 
+			// Save the new user infos
 			vm.newUser = {
 				username:'',
 				password:'',
@@ -61,32 +67,29 @@
 				firstName:'',
 				lastName:'',
 			};
+			// Confirm password input
+			vm.confirmPassword = '';
 
-			vm.confirm_password = '';
-
+			// Save info for sign-in
 			vm.user = {
 				password: '',
 				username :'',
 			};
 
-			vm.changeShow = function(){
-				if(vm.account.select=== 'new account'){
+			// call for switch view 
+			vm.switchView = function(){
+				if(vm.account.select === 'new account'){
 					vm.showNewAccount = true;
 				}else{
 					vm.showNewAccount = false;
 				}
 			};
 
-			vm.connexion = function(){
+			// call for sign-in 
+			vm.signIn = function(){
 				if(vm.user.username != '' && vm.user.password!= ''){
-					var res = connexionService.connexion(vm.user);
-					if(res.status === 201){
-						console.log('connexion etablished '+ res.status);
-					}else{
-						console.log('connexion failed '+ res.status);
-					}
+					connexionService.signIn(vm.user);
 				}
-				
 			}
 
 			vm.createAccount = function(){
@@ -95,13 +98,8 @@
 					vm.newUser.email != '' && 
 					vm.firstName != '' &&
 					vm.lastName != '' &&
-					vm.confirm_password === vm.newUser.password){
-						var res = connexionService.createAccount(vm.newUser);	
-						if(res.status === 201){
-							console.log('connexion etablished ' + res.status);
-						}else{
-							console.log('connexion failed ' + res.status);
-						}
+					vm.confirmPassword === vm.newUser.password){
+					connexionService.createAccount(vm.newUser);	
 				}
 			}
 		}

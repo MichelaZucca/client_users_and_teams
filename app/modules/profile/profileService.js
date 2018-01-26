@@ -13,230 +13,156 @@
 		.module('users-and-teams')
 		.factory('profileService', profileService);
 
-		profileService.$inject = ['$http'];
+		profileService.$inject = ['$http','homeService'];
 
-		function profileService ($http) {
+		function profileService ($http, homeService) {
 
-			var token = '';
-			var username = '';
-			var userResponse = {
-				username: '',
-				firstName: '',
-				id: '',
-				lastName: '',
-				email: '',
-			};
-
-			var myTeams = {};
-
-			function getMyTeams(){
-				return myTeams;
-			};
-			function setUsername(name){
-				console.log('username have been saved');
-				username = name;
-			};
-			function getUsername(){
-				return username;
-			};
-			function setToken(jwt){
-				console.log('token have been saved');
-				token = jwt;
-			};
-			function getToken(){
-				return token;
-			};
-			function getId(){
-				return userResponse.id;
-			};
-			function getEmail(){
-				return userResponse.email;
-			};
-			function getFirstName(){
-				return userResponse.firstName;
-			};
-			function getLastName(){
-				return userResponse.lastName;
-			};
-
-			// Permet de récupérer les informations d'un utilisateur
-			// Appel de GET api/users/{username}
+			// Get the users informations
+			// Call GET api/users/{username}
 			function getUser(username){
-				// Préparation de la requête
 				var req = {
 					method: 'GET',
 					url: 'http://localhost:8080/api/users/'+ username,
 					headers: {
-						'Authorization': 'Bearer ' + token,
+						'Authorization': 'Bearer ' + homeService.getToken(),
 						'Accept': 'application/json',
 					},
 				};
 	
-				// Objet de retour
-				var state = {};
-
 				$http(req)
 					.then(function (response) {
-						userResponse = response.data;
-						// Mise à jour de l'état retourné
-						status = { status: response.status, message: response.statusText};
+						homeService.setUserInfos(response.data);
+						var status = { status: response.status, message: response.statusText, data:{} };
+						homeService.setStatus(status);
 					}, function (error) {
-						// Mise à jour de l'état retourné
-						status = {status: error.status, message: error.statusText};
+						var status = { status: error.status, message: error.statusText, data:{} };
+						homeService.setStatus(status);
 					}
 				);
-				return status;
 			}
 
-			// Fonction pour mettre à jour un utilisateur
-			// Appel de PUT api/users/{username}
+			// Update the user account
+			// Call PUT api/users/{username}
 			function updateUser(username, updateData){
-				// Préparation de la requête
 				var req = {
 					method: 'PUT',
 					url: 'http://localhost:8080/api/users/' + username,
 					headers: {
-						'Authorization': 'Bearer ' + token,
+						'Authorization': 'Bearer ' + homeService.getToken(),
 						'Accept': 'application/json',
 					},
 					data: updateData,
 				};
 
-				// Objet de retour
-				var status ={};
-
 				$http(req)
 					.then(function (response) {
-						// Mise à jour des données
-						userResponse.email = updateData.email;
-						userResponse.firstName = updateData.firstName;
-						userResponse.lastName = updateData.lastName;
-						// Mise à jour de l'état retourné
-						status = { status: response.status, message: response.statusText};
+						// update user infos
+						homeService.setUserInfos(
+							{
+								username: updateData.username,
+								firstName: updateData.firstName,
+								lastName: updateData.lastName,
+								id: updateData.id,
+								email: updateData.email,
+							}
+						);
+	
+						var status = { status: response.status, message: response.statusText, data:{} };
+						homeService.setStatus(status);
 					}, function (error) {
-						// Mise à jour de l'état retourné
-						status = {status: error.status, message: error.statusText};
-					}
-				);
-				return status;
+						var status = { status: error.status, message: error.statusText, data:{} };
+						homeService.setStatus(status);
+					});
 			};
 
-			// Fonction pour mettre à jour un utilisateur
-			// Appel de PUT api/users/{username}
+			// Get teams of user
+			// Call GET api/users/{username}/teams
 			function getTeamsOfUser(username){
-				// Préparation de la requête
 				var req = {
 					method: 'GET',
-					url: 'http://localhost:8080/api/users/' + username+'/teams',
+					url: 'http://localhost:8080/api/users/' + username +'/teams',
 					headers: {
-						'Authorization': 'Bearer ' + token,
+						'Authorization': 'Bearer ' + homeService.getToken(),
 						'Accept': 'application/json',
 					},
 				};
 
-				// Objet de retour
-				var status ={};
+				$http(req)
+					.then(function (response) {
+						homeService.setListMyTeams(response.data);
+						var status = { status: response.status, message: response.statusText, data:{} };
+						homeService.setStatus(status);		
+					}, function (error) {
+						var status = { status: error.status, message: error.statusText, data:{} };
+						homeService.setStatus(status);
+					});
+			};
+
+			// Get a team with id of team
+			// Call GET sur api/teams/{id_team}
+			function getTeam(idTeam){
+				var req = {
+					method: 'GET',
+					url: 'http://localhost:8080/api/teams/' + idTeam,
+					headers: {
+						'Authorization': 'Bearer ' + homeService.getToken(),
+						'Accept': 'application/json',
+					},
+				};
 
 				$http(req)
 					.then(function (response) {
-						// Mise à jour de l'état retourné
-						status = { status: response.status, message: response.statusText};
-						myTeams = response.data;
+						var status = { status: response.status, message: response.statusText, data:{} };
+						homeService.setStatus(status);	
 					}, function (error) {
-						// Mise à jour de l'état retourné
-						status = {status: error.status, message: error.statusText};
-					}
-				);
-				return status;
+						var status = { status: error.status, message: error.statusText, data:{} };
+						homeService.setStatus(status);
+					});
 			};
 
-			function getTeam(idTeam){
-					// Préparation de la requête
-					var req = {
-						method: 'GET',
-						url: 'http://localhost:8080/api/teams/' + idTeam,
-						headers: {
-							'Authorization': 'Bearer ' + token,
-							'Accept': 'application/json',
-						},
-					};
-	
-					// Objet de retour
-					var status ={};
-	
-					$http(req)
-						.then(function (response) {
-							// Mise à jour de l'état retourné
-							status = {data:response, status: response.status, message: response.statusText};
-						}, function (error) {
-							// Mise à jour de l'état retourné
-							status = {status: error.status, message: error.statusText};
-						}
-					);
-					return status;
-			};
-
-
-				// Permet de récupérer les informations d'un utilisateur
-			// Appel de GET api/users/{username}
+			// Create a new team
+			// Call POST api/users/teams
 			function createTeam(name){
-
+				var infos = homeService.getUserInfos();
+				// dataset for the POST request
 				var datas = {
 						members: [
 						  {
-							email: userResponse.email,
-							firstName: userResponse.firstName,
-							id: userResponse.id,
-							lastName: userResponse.lastName,
-							username: userResponse.username
+							email: infos.email,
+							firstName: infos.firstName,
+							id: infos.id,
+							lastName: infos.lastName,
+							username: infos.username,
 						  }
 						],
 						name: name
 					  };
-					
 
-				// Préparation de la requête
 				var req = {
 					method: 'POST',
 					url: 'http://localhost:8080//api/teams',
 					headers: {
-						'Authorization': 'Bearer ' + token,
+						'Authorization': 'Bearer ' + homeService.getToken(),
 						'Accept': 'application/json',
 					},
 					data: datas
 				};
-				console.log(req);
-	
-				// Objet de retour
-				var state = {};
 
 				$http(req)
 					.then(function (response) {
-						userResponse = response.data;
-						// Mise à jour de l'état retourné
-						status = { status: response.status, message: response.statusText};
+						var status = { status: response.status, message: response.statusText, data:{} };
+						homeService.setStatus(status);
 					}, function (error) {
-						// Mise à jour de l'état retourné
-						status = {status: error.status, message: error.statusText};
+						var status = { status: error.status, message: error.statusText, data:{} };
+						homeService.setStatus(status);
 					}
 				);
-				return status;
 			};
 
-			// Fonctions exposées à l'utilisation
 			return{
-				setToken: setToken,
-				getToken: getToken,
-				setUsername: setUsername,
-				getUsername: getUsername,
 				getUser: getUser,
-				getId: getId,
-				getLastName: getLastName,
-				getFirstName: getFirstName,
-				getEmail: getEmail,
 				updateUser: updateUser,
 				getTeamsOfUser: getTeamsOfUser,
-				getMyTeams: getMyTeams,
 				getTeam: getTeam,
 				createTeam: createTeam,
 			};
