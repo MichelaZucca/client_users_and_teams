@@ -53,7 +53,7 @@
         <md-card-content ng-show="vm.isCreated">
             <md-input-container class="md-block">
               <form name="formTeam" ng-show="!vm.showNewAccount">
-                <md-content layout="column" layout-padding="">
+                <md-content layout="column">
                   <label>Team name</label>
                   <input minLength="4" required  name="teamName" ng-model="vm.createTeamName">
                   <div ng-messages="formTeam.un.$error">
