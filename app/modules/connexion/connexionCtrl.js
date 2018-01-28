@@ -89,18 +89,17 @@
 			vm.signIn = function(){
 				if(vm.user.username != '' && vm.user.password!= ''){
 					connexionService.signIn(vm.user);
-					var status = homeService.getStatus();
 					
-
 					$timeout( function(){
+					var status = homeService.getStatus();
 					if(status.code == '200'){
-						vm.toats('You are connected');
+						vm.toats('You are connected !');
 						// Get inforamtions for profile
 						profileService.getUser(vm.user.username);
 						profileService.getTeamsOfUser(vm.user.username);
 						profileService.getUsers();
 					}else{
-						vm.toats('Sorry, this user does not exist');
+						vm.toats('Sorry, this user does not exist !');
 					}
 					},100);
 				}
@@ -113,10 +112,17 @@
 					vm.firstName != '' &&
 					vm.lastName != '' &&
 					vm.confirmPassword === vm.newUser.password){
-					connexionService.createAccount(vm.newUser);	
-					var status = homeService.getStatus();
-					console.log(status);
-				}
+						connexionService.createAccount(vm.newUser);	
+
+						$timeout( function(){
+							var status = homeService.getStatus();
+							if(status.code == '201'){
+								vm.toats('account creates successfully !');
+							}else{
+								vm.toats('Sorry, creation failed !');
+							}
+						},300);
+					}
 			}
 		
 			vm.toats = function(message){
