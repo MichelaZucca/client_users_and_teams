@@ -14,7 +14,7 @@
 		.controller('ConnexionCtrl', Connexion)
 		.directive("compareTo", compareTo);
 
-		Connexion.$inject = ['connexionService','homeService'];
+		Connexion.$inject = ['connexionService','homeService', 'profileService' ,'$scope','$mdToast', '$timeout'];
 
 		/*
 		* recommend
@@ -40,7 +40,7 @@
 			};
 		  }
 
-		function Connexion(connexionService, homeService) {
+		function Connexion(connexionService, homeService, profileService, $scope, $mdToast, $timeout) {
 			var vm = this;
 
 			/**
@@ -89,6 +89,20 @@
 			vm.signIn = function(){
 				if(vm.user.username != '' && vm.user.password!= ''){
 					connexionService.signIn(vm.user);
+					var status = homeService.getStatus();
+					
+
+					$timeout( function(){
+					if(status.code == '200'){
+						vm.toats('You are connected');
+						// Get inforamtions for profile
+						profileService.getUser(vm.user.username);
+						profileService.getTeamsOfUser(vm.user.username);
+						profileService.getUsers();
+					}else{
+						vm.toats('Sorry, this user does not exist');
+					}
+					},100);
 				}
 			}
 
@@ -100,7 +114,26 @@
 					vm.lastName != '' &&
 					vm.confirmPassword === vm.newUser.password){
 					connexionService.createAccount(vm.newUser);	
+					var status = homeService.getStatus();
+					console.log(status);
 				}
+			}
+		
+			vm.toats = function(message){
+				var pos = {
+					bottom:false,
+					top: true,
+					left:false,
+					right:true,
+				};
+				
+				$mdToast.show(
+				$mdToast.simple()
+					.textContent(message)
+					.parent(document.querySelectorAll('#toaster'))
+					.position('bottom')
+					.hideDelay(3000)
+				);
 			}
 		}
 		 		
