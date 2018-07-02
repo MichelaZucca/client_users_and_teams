@@ -211,10 +211,10 @@ angular.module('profile')
 	* Controller of the app
 	*/
 
-  	angular
-		.module('users-and-teams')
-		.controller('ConnexionCtrl', Connexion)
-		.directive("compareTo", compareTo);
+	  angular
+			  .module('users-and-teams')
+			  .controller('ConnexionCtrl', Connexion)
+			  .directive("compareTo", compareTo);
 
 		Connexion.$inject = ['connexionService','homeService', 'profileService' ,'$scope','$mdToast', '$timeout'];
 
